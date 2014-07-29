@@ -36,7 +36,7 @@ class MKWSXB(XBlock):
         """Studio configuration view."""
         html = self.resource_string("static/html/settings.html")
         frag = Fragment(html.format(query=self.query))
-        frag.add_javascript(self.resource_string("static/js/settings.js"))
+        frag.add_javascript(self.resource_string("static/js/src/settings.js"))
         frag.initialize_js('MKWSXBSettings')
         return frag
 
