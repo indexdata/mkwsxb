@@ -1,6 +1,7 @@
 """Embed widgets from MKWS, the MasterKey Widget Set"""
 
 import pkg_resources
+import random
 
 from xblock.core import XBlock
 from xblock.fields import Integer, Scope, String, Any, Boolean, Dict
@@ -24,7 +25,7 @@ class MKWSXB(XBlock):
     def student_view(self, context=None):
         """The primary view of the MKWS XBlock, shown to students when viewing courses."""
         html = self.resource_string("static/html/mkwsxb.html")
-        frag = Fragment(html.format(query=self.query))
+        frag = Fragment(html.format(query=self.query, team=random.randint(0, 100000)))
         frag.add_javascript_url("//mkws.indexdata.com/mkws-complete.js")
         frag.add_javascript_url("//example.indexdata.com/mkws-widget-ru.js")
         frag.add_css(self.resource_string("static/css/mkws-widget-ru.css"))
