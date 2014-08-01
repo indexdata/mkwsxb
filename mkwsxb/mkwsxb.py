@@ -16,6 +16,10 @@ class MKWSXB(XBlock):
       default="water",
       scope=Scope.content
     )
+    display_name = String(
+      default="MKWS Widget",
+      scope=Scope.settings
+    )
 
     def resource_string(self, path):
         """Helper for accessing resources."""
