@@ -30,10 +30,11 @@ class MKWSXB(XBlock):
         """The primary view of the MKWS XBlock, shown to students when viewing courses."""
         html = self.resource_string("static/html/mkwsxb.html")
         frag = Fragment(html.format(query=self.query, team=random.randint(0, 100000)))
-        frag.add_javascript_url("//mkws.indexdata.com/mkws-complete.js")
-        frag.add_javascript_url("//example.indexdata.com/mkws-widget-ru.js")
-        frag.add_css(self.resource_string("static/css/mkws-widget-ru.css"))
+        # mkwsxb.js uses require.js as it cannot guarantee mkws-complete.js has loaded 
+        # in studio without it
+        frag.add_javascript_url("/static/js/vendor/require.js");
         frag.add_javascript(self.resource_string("static/js/src/mkwsxb.js"))
+        frag.add_css(self.resource_string("static/css/mkws-widget-ru.css"))
         frag.initialize_js('MKWSXB')
         return frag;
 
