@@ -33,12 +33,16 @@ class MKWSRef(XBlock):
         # student.js uses require.js as it cannot guarantee mkws-complete.js has loaded 
         # in studio without it. We'll need to add it if we're in the LMS:
         frag.add_javascript_url("/static/js/vendor/require.js");
+        # frag.add_resource_url("//mkws.indexdata.com/mkws-complete", "text/javascript", "head");
+        # frag.add_resource('<script src="//mkws.indexdata.com/mkws-complete.js"></script>', "text/html", "head");
         frag.add_javascript(self.resource_string("static/js/src/student.js"))
         frag.initialize_js('MKWSRef')
         return frag;
 
     def author_view(self, context=None):
-        """View of the MKWS XBlock shown when authoring courses."""
+        """The primary view of the MKWS XBlock, shown when authoring courses."""
+        # This should closely mirror the student_view. Here all we do is not include
+        # require.js as it's already in Studio and the lms path won't work.
         html = self.resource_string("static/html/student.html")
         frag = Fragment(html.format(query=self.query, team=random.randint(0, 100000)))
         frag.add_javascript(self.resource_string("static/js/src/student.js"))
