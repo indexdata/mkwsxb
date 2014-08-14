@@ -1,4 +1,4 @@
-"""Embed widgets from MKWS, the MasterKey Widget Set"""
+"""Embed reference widget from MKWS, the MasterKey Widget Set"""
 
 import pkg_resources
 import random
@@ -7,8 +7,8 @@ from xblock.core import XBlock
 from xblock.fields import Integer, Scope, String, Any, Boolean, Dict
 from xblock.fragment import Fragment
 
-class MKWSXB(XBlock):
-    """Embed widgets from MKWS, the MasterKey Widget Set"""
+class MKWSRef(XBlock):
+    """Embed reference widget from MKWS, the MasterKey Widget Set"""
 
     # Fields
     query = String(
@@ -17,7 +17,7 @@ class MKWSXB(XBlock):
       scope=Scope.content
     )
     display_name = String(
-      default="MKWS Widget",
+      default="MKWS Reference Widget",
       scope=Scope.settings
     )
 
@@ -28,14 +28,21 @@ class MKWSXB(XBlock):
 
     def student_view(self, context=None):
         """The primary view of the MKWS XBlock, shown to students when viewing courses."""
-        html = self.resource_string("static/html/mkwsxb.html")
+        html = self.resource_string("static/html/student.html")
         frag = Fragment(html.format(query=self.query, team=random.randint(0, 100000)))
-        # mkwsxb.js uses require.js as it cannot guarantee mkws-complete.js has loaded 
-        # in studio without it
+        # student.js uses require.js as it cannot guarantee mkws-complete.js has loaded 
+        # in studio without it. We'll need to add it if we're in the LMS:
         frag.add_javascript_url("/static/js/vendor/require.js");
-        frag.add_javascript(self.resource_string("static/js/src/mkwsxb.js"))
-        frag.add_css(self.resource_string("static/css/mkws-widget-ru.css"))
-        frag.initialize_js('MKWSXB')
+        frag.add_javascript(self.resource_string("static/js/src/student.js"))
+        frag.initialize_js('MKWSRef')
+        return frag;
+
+    def author_view(self, context=None):
+        """View of the MKWS XBlock shown when authoring courses."""
+        html = self.resource_string("static/html/student.html")
+        frag = Fragment(html.format(query=self.query, team=random.randint(0, 100000)))
+        frag.add_javascript(self.resource_string("static/js/src/student.js"))
+        frag.initialize_js('MKWSRef')
         return frag;
 
     def studio_view(self, context=None):
@@ -43,7 +50,7 @@ class MKWSXB(XBlock):
         html = self.resource_string("static/html/settings.html")
         frag = Fragment(html.format(query=self.query))
         frag.add_javascript(self.resource_string("static/js/src/settings.js"))
-        frag.initialize_js('MKWSXBSettings')
+        frag.initialize_js('MKWSRefSettings')
         return frag
 
     @XBlock.json_handler
@@ -56,9 +63,9 @@ class MKWSXB(XBlock):
     def workbench_scenarios():
         """A canned scenario for display in the workbench."""
         return [
-            ("MKWSXB",
+            ("MKWSRef",
              """<vertical_demo>
-                <mkwsxb/>
+                <mkwsref/>
                 </vertical_demo>
              """),
         ]

@@ -1,4 +1,4 @@
-function MKWSXBSettings(runtime, element) {
+function MKWSRefSettings(runtime, element) {
   $(element).find('.save-button').bind('click', function() {
     var handlerUrl = runtime.handlerUrl(element, 'update_settings');
     var data = {

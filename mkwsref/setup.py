@@ -1,4 +1,4 @@
-"""Setup for mkwsxb XBlock."""
+"""Setup for mkwsref XBlock."""
 
 import os
 from setuptools import setup
@@ -19,19 +19,19 @@ def package_data(pkg, roots):
     return {pkg: data}
 
 setup(
-    name='mkwsxb-xblock',
+    name='mkwsref',
     version='0.1',
-    description='XBlock to embed MKWS widgets',
+    description='XBlock to embed an MKWS reference widget',
     packages=[
-        'mkwsxb',
+        'mkwsref',
     ],
     install_requires=[
         'XBlock',
     ],
     entry_points={
         'xblock.v1': [
-            'mkwsxb = mkwsxb:MKWSXB',
+            'mkwsref = mkwsref:MKWSRef',
         ]
     },
-    package_data=package_data("mkwsxb", ["static", "public"]),
+    package_data=package_data("mkwsref", ["static", "public"]),
 )
