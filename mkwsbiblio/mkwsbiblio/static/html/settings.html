@@ -1,0 +1,28 @@
+<div class="wrapper-comp-settings is-active editor-with-buttons" id="settings-tab">
+  <ul class="list-input settings-list">
+    <li class="field comp-setting-entry is-set">
+      <div class="wrapper-comp-setting" id="mkwsCurrentRecordContainer">
+        <h3>Current selection:</h3>
+        <div class="mkwsRecords mkwsTeam_UNIQUE" id="mkwsCurrentRecord" autosearch="{query}" perpage="1">Loading record...</div>
+      </div>
+    </li>
+    <li class="field comp-setting-entry is-set">
+      <div class="wrapper-comp-setting">
+        <h3>Choose a record:</h3>
+        <div class="mkwsSearch mkwsTeam_BlockConfig"></div>
+        <!-- NB: double braces needed to escape edx templateing -->
+        <div class="mkwsRecords mkwsTeam_BlockConfig" data-mkws-config='{{ "template": "EdxChooser", "perpage": 5 }}'></div>
+      </div>
+    </li>
+  </ul>
+  <div class="xblock-actions">
+    <ul>
+      <li class="action-item">
+        <a href="#" class="button action-primary save-button">Save</a>
+      </li>
+      <li class="action-item">
+        <a href="#" class="button cancel-button">Cancel</a>
+      </li>
+    </ul>
+  </div>
+</div>
