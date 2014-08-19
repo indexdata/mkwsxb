@@ -12,7 +12,6 @@ require.config({
 function MKWSRef(runtime, element) {
   require(['mkws'], function() { 
     console.log(mkws);
-    //mkws.init("XBlock initialised.", element);
-    mkws.init("XBlock initialised.");
+    mkws.init("XBlock initialised.", element);
   } );
 }
