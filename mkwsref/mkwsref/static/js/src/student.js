@@ -1,7 +1,7 @@
 /* Javascript for MKWSRef. */
 require.config({
   paths: {
-    mkws: "//mkws.indexdata.com/mkws-complete",
+    mkws: "//mkws.indexdata.com/mkws-compl-tmpl",
   },
   shim: {
     mkws: {
