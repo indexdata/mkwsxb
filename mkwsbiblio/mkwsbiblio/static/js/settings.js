@@ -16,11 +16,9 @@ function program1(depth0,data) {
   if (helper = helpers.detailLinkId) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.detailLinkId); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" onclick=\"$('#mkwsCurrentRecord').attr('autosearch', '";
-  if (helper = helpers['md-title']) { stack1 = helper.call(depth0, {hash:{},data:data}); }
-  else { helper = (depth0 && depth0['md-title']); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
-  buffer += escapeExpression(stack1)
-    + "'); mkws.init('Click select', $('#mkwsCurrentRecordContainer'));\">\n      <b>";
+    + "\" onclick=\" $('#mkwsCurrentRecord').attr('data-mkws-recid', '"
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.recid)),stack1 == null || stack1 === false ? stack1 : stack1[0])),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "'); $('#mkwsCurrentRecord').attr('autosearch', mkws.teams['BlockConfig'].query()); delete mkws.teams.ConfiguredRecord; mkws.init('Click select', '#mkwsCurrentRecordContainer'); return false;\">\n      <b>";
   if (helper = helpers['md-title']) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0['md-title']); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -76,19 +74,38 @@ function program6(depth0,data) {
   return buffer;
   });
 })();
+(function() {
+  var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
+templates['EdxChosen'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<span>Current selection: ";
+  if (helper = helpers['md-title']) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0['md-title']); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</span>\n";
+  return buffer;
+  });
+})();
 function MKWSBiblioSettings(runtime, element) {
   mkws.init("XBlock settings pane", "#settings-tab");
   $(element).find('.save-button').bind('click', function() {
     var handlerUrl = runtime.handlerUrl(element, 'update_settings');
     var data = {
-      query: $(element).find('#mkwsCurrentRecord').attr('autosearch')
+      query: mkws.teams["BlockConfig"].query(),
+      recid: $(element).find('#mkwsCurrentRecord').attr('data-mkws-recid')
     };
     $.post(handlerUrl, JSON.stringify(data)).done(function(response) {
       window.location.reload(false);
+      return false;
     });
   });
 
   $(element).find('.cancel-button').bind('click', function() {
     runtime.notify('cancel', {});
+    return false;
   });
-};
+}

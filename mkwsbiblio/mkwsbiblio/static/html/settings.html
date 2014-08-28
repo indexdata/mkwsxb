@@ -2,8 +2,7 @@
   <ul class="list-input settings-list">
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting" id="mkwsCurrentRecordContainer">
-        <h3>Current selection:</h3>
-        <div class="mkwsRecords mkwsTeam_UNIQUE" id="mkwsCurrentRecord" autosearch="{query}" perpage="1">Loading record...</div>
+        <div class="mkwsDetails mkwsTeam_ConfiguredRecord" id="mkwsCurrentRecord" autosearch="{query}" data-mkws-recid="{recid}" data-mkws-config='{{ "template": "EdxChosen" }}'>Loading record...</div>
       </div>
     </li>
     <li class="field comp-setting-entry is-set">
@@ -11,7 +10,7 @@
         <h3>Choose a record:</h3>
         <div class="mkwsSearch mkwsTeam_BlockConfig"></div>
         <!-- NB: double braces needed to escape edx templateing -->
-        <div class="mkwsRecords mkwsTeam_BlockConfig" data-mkws-config='{{ "template": "EdxChooser", "perpage": 5 }}'></div>
+        <div class="mkwsRecords mkwsTeam_BlockConfig" perpage="5" data-mkws-config='{{ "template": "EdxChooser" }}'></div>
       </div>
     </li>
   </ul>

@@ -16,6 +16,11 @@ class MKWSBiblio(XBlock):
       default="water",
       scope=Scope.content
     )
+    recid = String(
+      help="Record to display",
+      default="content: title modern water resources engineering",
+      scope=Scope.content
+    )
     display_name = String(
       default="MKWS bibliographic details",
       scope=Scope.settings
@@ -29,12 +34,14 @@ class MKWSBiblio(XBlock):
     def student_view(self, context=None):
         """The primary view of the MKWS XBlock, shown to students when viewing courses."""
         html = self.resource_string("static/html/student.html")
-        frag = Fragment(html.format(query=self.query, team=random.randint(0, 100000)))
+        frag = Fragment(html.format(query=self.query, recid=self.recid, team=random.randint(0, 100000)))
         # student.js uses require.js as it cannot guarantee mkws-complete.js has loaded 
         # in studio without it. We'll need to add it if we're in the LMS:
-        frag.add_javascript_url("/static/js/vendor/require.js");
+        #frag.add_javascript_url("/static/js/vendor/require.js");
+        frag.add_javascript_url("//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.14/require.min.js");
         # frag.add_resource_url("//mkws.indexdata.com/mkws-complete", "text/javascript", "head");
         # frag.add_resource('<script src="//mkws.indexdata.com/mkws-complete.js"></script>', "text/html", "head");
+        frag.add_css(self.resource_string("static/css/mkwsbiblio.css"))
         frag.add_javascript(self.resource_string("static/js/src/student.js"))
         frag.initialize_js('MKWSBiblio')
         return frag;
@@ -44,7 +51,8 @@ class MKWSBiblio(XBlock):
         # This should closely mirror the student_view. Here all we do is not include
         # require.js as it's already in Studio and the lms path won't work.
         html = self.resource_string("static/html/student.html")
-        frag = Fragment(html.format(query=self.query, team=random.randint(0, 100000)))
+        frag = Fragment(html.format(query=self.query, recid=self.recid, team=random.randint(0, 100000)))
+        frag.add_css(self.resource_string("static/css/mkwsbiblio.css"))
         frag.add_javascript(self.resource_string("static/js/src/student.js"))
         frag.initialize_js('MKWSBiblio')
         return frag;
@@ -52,7 +60,7 @@ class MKWSBiblio(XBlock):
     def studio_view(self, context=None):
         """Studio configuration view."""
         html = self.resource_string("static/html/settings.html")
-        frag = Fragment(html.format(query=self.query))
+        frag = Fragment(html.format(query=self.query, recid=self.recid))
         frag.add_javascript(self.resource_string("static/js/settings.js"))
         frag.initialize_js('MKWSBiblioSettings')
         return frag
@@ -61,6 +69,7 @@ class MKWSBiblio(XBlock):
     def update_settings(self, data, suffix=''):
         """Studio configuration callback."""
         self.query = data['query']
+        self.recid = data['recid']
         return {"result": "success"}
 
     @staticmethod

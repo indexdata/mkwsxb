@@ -10,7 +10,7 @@ hits:
 }}
 {{#each hits}}
   <div class="{{containerClass}}">
-    <a href="#" id="{{detailLinkId}}" onclick="$('#mkwsCurrentRecord').attr('autosearch', '{{md-title}}'); mkws.init('Click select', $('#mkwsCurrentRecordContainer'));">
+    <a href="#" id="{{detailLinkId}}" onclick=" $('#mkwsCurrentRecord').attr('data-mkws-recid', '{{recid.[0]}}'); $('#mkwsCurrentRecord').attr('autosearch', mkws.teams['BlockConfig'].query()); delete mkws.teams.ConfiguredRecord; mkws.init('Click select', '#mkwsCurrentRecordContainer'); return false;">
       <b>{{md-title}}</b>
     </a>
     {{#if md-title-remainder}}

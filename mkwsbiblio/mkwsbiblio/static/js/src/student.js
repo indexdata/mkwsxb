@@ -1,7 +1,8 @@
 window.mkws_noready = true;
 require.config({
   paths: {
-    mkws: "//mkws.local/mkws-complete",
+    //mkws: "//mkws.local/mkws-complete",
+    mkws: "//mkws.indexdata.com/mkws-compl-tmpl",
   },
   shim: {
     mkws: {
